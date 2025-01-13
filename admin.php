@@ -23,18 +23,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     ?>
     <!DOCTYPE html>
-    <html>
+    <html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Connexion Admin</title>
         <link rel="stylesheet" href="style.css">
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
+        <header>
             <h1>Connexion Admin</h1>
-            <?php if (isset($error)): ?>
-                <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-            <?php endif; ?>
-            <form action="admin.php" method="POST">
+        </header>
+        <div class="container">
+            <form action="admin.php" method="POST" class="admin-form">
+                <?php if (isset($error)): ?>
+                    <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+                <?php endif; ?>
                 <label for="username">Utilisateur :</label>
                 <input type="text" id="username" name="username" required>
                 <label for="password">Mot de passe :</label>
@@ -42,6 +47,31 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
                 <button type="submit">Se connecter</button>
             </form>
         </div>
+
+        <!-- Bouton de mode sombre/clair -->
+        <button id="theme-toggle" aria-label="Changer le mode">
+            <i class="fas fa-sun" id="theme-icon"></i>
+        </button>
+
+        <script>
+            const toggleButton = document.getElementById('theme-toggle');
+            const themeIcon = document.getElementById('theme-icon');
+            const body = document.body;
+
+            // Vérifie le thème stocké
+            if (localStorage.getItem('theme') === 'dark') {
+                body.classList.add('dark-mode');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            }
+
+            toggleButton.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                const isDarkMode = body.classList.contains('dark-mode');
+                themeIcon.classList.toggle('fa-sun', !isDarkMode);
+                themeIcon.classList.toggle('fa-moon', isDarkMode);
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+            });
+        </script>
     </body>
     </html>
     <?php
@@ -50,39 +80,63 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panneau d'administration</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
         <h1>Panneau d'administration</h1>
     </header>
-    <div class="container">
+    <div class="admin-forms-container">
+    <form action="add_article.php" method="POST" class="admin-form">
         <h2>Ajouter un article</h2>
-        <form action="add_article.php" method="POST">
-            <label for="title">Titre :</label>
-            <input type="text" id="title" name="title" placeholder="Titre de l'article" required>
-            <label for="content">Contenu :</label>
-            <textarea id="content" name="content" placeholder="Contenu HTML de l'article" rows="10" required></textarea>
-            <button type="submit">Ajouter l'article</button>
-        </form>
+        <label for="title">Titre :</label>
+        <input type="text" id="title" name="title" placeholder="Titre de l'article" required>
+        <label for="content">Contenu :</label>
+        <textarea id="content" name="content" placeholder="Contenu HTML de l'article" rows="10" required></textarea>
+        <button type="submit">Ajouter l'article</button>
+    </form>
 
-        <hr>
-
+    <form action="delete_article.php" method="POST" class="admin-form">
         <h2>Supprimer un article</h2>
-        <form action="delete_article.php" method="POST">
-            <label for="id">ID de l'article :</label>
-            <input type="number" id="id" name="id" placeholder="ID de l'article" required>
-            <button type="submit">Supprimer l'article</button>
-        </form>
+        <label for="id">ID de l'article :</label>
+        <input type="number" id="id" name="id" placeholder="ID de l'article" required>
+        <button type="submit">Supprimer l'article</button>
+    </form>
 
-        <hr>
+    <form action="logout.php" method="POST" class="admin-form">
+        <button type="submit">Se déconnecter</button>
+    </form>
+</div>
 
-        <form action="logout.php" method="POST">
-            <button type="submit">Se déconnecter</button>
-        </form>
-    </div>
+
+    <!-- Bouton de mode sombre/clair -->
+    <button id="theme-toggle" aria-label="Changer le mode">
+        <i class="fas fa-sun" id="theme-icon"></i>
+    </button>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            themeIcon.classList.toggle('fa-sun', !isDarkMode);
+            themeIcon.classList.toggle('fa-moon', isDarkMode);
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        });
+    </script>
 </body>
 </html>

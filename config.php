@@ -1,8 +1,8 @@
 <?php
 $host = '';
 $dbname = '';
-$username = '';
-$password = ''; 
+$username = ''; // Remplacez par votre utilisateur MySQL
+$password = '';     // Remplacez par votre mot de passe MySQL
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

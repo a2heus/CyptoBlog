@@ -16,22 +16,21 @@ $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fonction pour créer un aperçu sécurisé de l'article
 function generatePreview($content, $limit = 200) {
-    // Supprimer les balises <script> et leur contenu
     $content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
-    // Supprimer toutes les autres balises HTML
     $content = strip_tags($content);
-    // Troncature du contenu
     $content = mb_strimwidth($content, 0, $limit, '...');
-    // Échapper le contenu pour éviter toute exécution
     return htmlspecialchars($content, ENT_QUOTES, 'UTF-8');
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoBlog</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -74,5 +73,54 @@ function generatePreview($content, $limit = 200) {
             <?php endforeach; ?>
         <?php endif; ?>
     </div>
+
+    <!-- Bouton de mode sombre/clair -->
+    <button id="theme-toggle" aria-label="Changer le mode">
+        <i class="fas fa-sun" id="theme-icon"></i>
+    </button>
+
+    <!-- Particules décoratives -->
+    <div class="particles"></div>
+
+    <script>
+        // Script pour le mode sombre/clair
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+
+            if (isDarkMode) {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Génération dynamique de particules
+        const particlesContainer = document.querySelector('.particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 5}s`;
+            particle.style.animationDuration = `${3 + Math.random() * 5}s`;
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+
+    <footer>
+        <p>&copy; 2025 CryptoBlog - made with ❤ by Marceau</p>
+    </footer>
 </body>
 </html>

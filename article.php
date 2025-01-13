@@ -18,10 +18,13 @@ if (!$article) {
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($article['title']) ?></title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -31,11 +34,36 @@ if (!$article) {
         </small>
     </header>
     <div class="container">
-        <div class="article-content">
-            <!-- Affiche le contenu HTML complet, y compris les scripts -->
-            <?= $article['content'] ?>
+        <div class="article-preview">
+            <div class="article-content">
+                <?= $article['content'] ?>
+            </div>
+            <a class="read-more" href="index.php">Retour à l'accueil</a>
         </div>
-        <a href="index.php">Retour à l'accueil</a>
     </div>
+
+    <!-- Bouton de mode sombre/clair -->
+    <button id="theme-toggle" aria-label="Changer le mode">
+        <i class="fas fa-sun" id="theme-icon"></i>
+    </button>
+
+    <script>
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+
+        toggleButton.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const isDarkMode = body.classList.contains('dark-mode');
+            themeIcon.classList.toggle('fa-sun', !isDarkMode);
+            themeIcon.classList.toggle('fa-moon', isDarkMode);
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        });
+    </script>
 </body>
 </html>
