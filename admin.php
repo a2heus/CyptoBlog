@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-// Vérification des identifiants
+// credentials
 const ADMIN_USER = 'root';
 const ADMIN_PASS = 'root';
 
-// Gestion de la connexion
+// login 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Vérification si l'utilisateur est connecté
+// session check
 if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     ?>
     <!DOCTYPE html>
@@ -48,7 +48,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             </form>
         </div>
 
-        <!-- Bouton de mode sombre/clair -->
+        <!-- dark mode -->
         <button id="theme-toggle" aria-label="Changer le mode">
             <i class="fas fa-sun" id="theme-icon"></i>
         </button>
@@ -58,7 +58,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             const themeIcon = document.getElementById('theme-icon');
             const body = document.body;
 
-            // Vérifie le thème stocké
+            // check dark mode cookie
             if (localStorage.getItem('theme') === 'dark') {
                 body.classList.add('dark-mode');
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
@@ -115,7 +115,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
 </div>
 
 
-    <!-- Bouton de mode sombre/clair -->
+    <!-- Boutton dark mode avec icone qui marche pas -->
     <button id="theme-toggle" aria-label="Changer le mode">
         <i class="fas fa-sun" id="theme-icon"></i>
     </button>
