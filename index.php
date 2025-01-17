@@ -120,7 +120,7 @@ function generatePreview($content, $limit = 200) {
     </script>
 
     <footer>
-        <p>&copy; 2025 CryptoBlog - made with ❤ by Marceau</p>
+    <p>&copy; 2025 CryptoBlog - made with ❤ by <a href="https://github.com/a2heus/CyptoBlog" target="_blank" rel="noopener noreferrer">Marceau</a></p>
     </footer>
 </body>
 </html>
