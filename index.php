@@ -1,10 +1,9 @@
 <?php
 include 'config.php';
 
-// Récupérer la recherche si elle existe
 $search = $_GET['search'] ?? '';
 
-// Préparer la requête SQL avec recherche
+// sql search
 if ($search) {
     $stmt = $pdo->prepare("SELECT * FROM articles WHERE title LIKE :search OR content LIKE :search ORDER BY id DESC");
     $stmt->execute(['search' => '%' . $search . '%']);
@@ -14,7 +13,6 @@ if ($search) {
 
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Fonction pour créer un aperçu sécurisé de l'article
 function generatePreview($content, $limit = 200) {
     $content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
     $content = strip_tags($content);
@@ -45,12 +43,12 @@ function generatePreview($content, $limit = 200) {
 
         <hr>
 
-        <!-- Résultats de la recherche -->
+        <!-- recherche result -->
         <?php if ($search): ?>
             <p>Résultats de recherche pour : <strong><?= htmlspecialchars($search) ?></strong></p>
         <?php endif; ?>
 
-        <!-- Liste des articles -->
+        <!-- list -->
         <?php if (empty($articles)): ?>
             <p>Aucun article trouvé.</p>
         <?php else: ?>
@@ -74,16 +72,16 @@ function generatePreview($content, $limit = 200) {
         <?php endif; ?>
     </div>
 
-    <!-- Bouton de mode sombre/clair -->
+    <!-- dark mode -->
     <button id="theme-toggle" aria-label="Changer le mode">
         <i class="fas fa-sun" id="theme-icon"></i>
     </button>
 
-    <!-- Particules décoratives -->
+    <!-- particules qui marchent pas -->
     <div class="particles"></div>
 
     <script>
-        // Script pour le mode sombre/clair
+        // script dark mode
         const toggleButton = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
         const body = document.body;
@@ -106,7 +104,7 @@ function generatePreview($content, $limit = 200) {
             }
         });
 
-        // Génération dynamique de particules
+        // particules qui marchent pas 
         const particlesContainer = document.querySelector('.particles');
         for (let i = 0; i < 50; i++) {
             const particle = document.createElement('div');
