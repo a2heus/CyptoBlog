@@ -12,7 +12,7 @@ $stmt->execute(['id' => $id]);
 $article = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$article) {
-    echo "<p>Article introuvable.</p>";
+    echo "<p>Article introuvable, n'essayez pas d'injecter quoi que ce sois dans l'url svp.</p>";
     exit;
 }
 ?>
@@ -24,7 +24,7 @@ if (!$article) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($article['title']) ?></title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>

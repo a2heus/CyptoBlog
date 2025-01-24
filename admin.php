@@ -1,11 +1,11 @@
 <?php
 session_start();
 
-// credentials
+// creds
 const ADMIN_USER = 'root';
 const ADMIN_PASS = 'root';
 
-// login 
+// connecting
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? '';
     $password = $_POST['password'] ?? '';
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// session check
+// session
 if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     ?>
     <!DOCTYPE html>
@@ -29,7 +29,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Connexion Admin</title>
         <link rel="stylesheet" href="style.css">
-        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <script src="all.min.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <header>
@@ -48,7 +48,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             </form>
         </div>
 
-        <!-- dark mode -->
+        <!-- darkmode -->
         <button id="theme-toggle" aria-label="Changer le mode">
             <i class="fas fa-sun" id="theme-icon"></i>
         </button>
@@ -58,7 +58,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
             const themeIcon = document.getElementById('theme-icon');
             const body = document.body;
 
-            // check dark mode cookie
+            // darkmode cache
             if (localStorage.getItem('theme') === 'dark') {
                 body.classList.add('dark-mode');
                 themeIcon.classList.replace('fa-sun', 'fa-moon');
@@ -86,7 +86,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panneau d'administration</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -115,7 +115,7 @@ if (!isset($_SESSION['admin_logged_in']) || !$_SESSION['admin_logged_in']) {
 </div>
 
 
-    <!-- Boutton dark mode avec icone qui marche pas -->
+    <!-- Bouton de mode sombre/clair -->
     <button id="theme-toggle" aria-label="Changer le mode">
         <i class="fas fa-sun" id="theme-icon"></i>
     </button>

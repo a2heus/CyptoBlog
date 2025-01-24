@@ -1,9 +1,10 @@
 <?php
 include 'config.php';
 
+// search
 $search = $_GET['search'] ?? '';
 
-// sql search
+// sql requette
 if ($search) {
     $stmt = $pdo->prepare("SELECT * FROM articles WHERE title LIKE :search OR content LIKE :search ORDER BY id DESC");
     $stmt->execute(['search' => '%' . $search . '%']);
@@ -13,6 +14,7 @@ if ($search) {
 
 $articles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Appercu de l'article sans problèmes de XSS
 function generatePreview($content, $limit = 200) {
     $content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $content);
     $content = strip_tags($content);
@@ -28,7 +30,7 @@ function generatePreview($content, $limit = 200) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoBlog</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -43,12 +45,12 @@ function generatePreview($content, $limit = 200) {
 
         <hr>
 
-        <!-- recherche result -->
+        <!-- Résultats de la recherche -->
         <?php if ($search): ?>
             <p>Résultats de recherche pour : <strong><?= htmlspecialchars($search) ?></strong></p>
         <?php endif; ?>
 
-        <!-- list -->
+        <!-- Liste des articles -->
         <?php if (empty($articles)): ?>
             <p>Aucun article trouvé.</p>
         <?php else: ?>
@@ -72,16 +74,16 @@ function generatePreview($content, $limit = 200) {
         <?php endif; ?>
     </div>
 
-    <!-- dark mode -->
+    <!-- Bouton de mode sombre/clair -->
     <button id="theme-toggle" aria-label="Changer le mode">
         <i class="fas fa-sun" id="theme-icon"></i>
     </button>
 
-    <!-- particules qui marchent pas -->
+    <!-- Particules décoratives -->
     <div class="particles"></div>
 
     <script>
-        // script dark mode
+        // Script pour le mode sombre/clair
         const toggleButton = document.getElementById('theme-toggle');
         const themeIcon = document.getElementById('theme-icon');
         const body = document.body;
@@ -104,7 +106,7 @@ function generatePreview($content, $limit = 200) {
             }
         });
 
-        // particules qui marchent pas 
+        // Génération dynamique de particules
         const particlesContainer = document.querySelector('.particles');
         for (let i = 0; i < 50; i++) {
             const particle = document.createElement('div');
