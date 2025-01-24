@@ -26,7 +26,8 @@ Welcome to CryptoBlog! Follow the steps below to set up and run the project.
 ## 🌐 Demo  
 
 A live demo is available here:  
-[CryptoBlog Demo](http://cryptoblog.ct.ws/)
+[CryptoBlog Demo](https://cryptoblog.ct.ws/)
+> I got a SSL certificate for the demo !
 
 ## 🔑 Admin Credentials  
 
